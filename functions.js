@@ -9,14 +9,7 @@ var warn = document.getElementById("warning");
 var extra = document.getElementById("extra");
 
 // returns length of the input value
-function inputLength(){
-	return input.value.length;
-}
-
-// returns length of the list
-function listLength(){
-	return item.length;
-}
+var inputLength = input.value.length;
 
 // creates the warning element
 function createWarningElement() {
@@ -42,8 +35,9 @@ function checkForDuplicates() {
 	for (let i = 0; i <= item.length - 1; i++) {
 		listArray.push(itemText[i].innerHTML);
 	}
-	if (listArray.indexOf(input.value) !== -1) { 
-		duplicateFound();
+	if (listArray.indexOf(input.value) !== -1) {
+		// pass listarray to function for length
+		duplicateFound(listArray);
 	}
 	else {
 		createListElement();
@@ -51,15 +45,17 @@ function checkForDuplicates() {
 }
 
 // display warning if duplicate is found
-function duplicateFound() {
+function duplicateFound(arr) {
 	hideWarning();
 	extra.style.display = "block";
 	var yesBtn = document.createElement("button");
 	yesBtn.className = "yesBtn";
 	yesBtn.appendChild(document.createTextNode("YES"));
-	extra.appendChild(yesBtn);
 	yesBtn.addEventListener("click", createListElement);
+	// dont append button if button is present
+	if (arr.length === 1) { extra.appendChild(yesBtn); }
 }
+
 
 // hide duplicate found message
 function hideDuplicateFound() {
@@ -104,7 +100,7 @@ function createListElement() {
 
 // initial function call
 function addListAfterClick(){
-	if (inputLength() > 0) { //makes sure that an empty input field doesn't create a li
+	if (inputLength > 0) { //makes sure that an empty input field doesn't create a li
 		checkForDuplicates();
 	} else {
 		 displayWarning();
@@ -113,7 +109,7 @@ function addListAfterClick(){
 
 // initial keypress function
 function addListAfterKeypress(event) {
-	if (inputLength() > 0 && event.which ===13 ) { //this now looks to see if you hit "enter"/"return"
+	if (inputLength > 0 && event.which ===13 ) { //this now looks to see if you hit "enter"/"return"
 		//the 13 is the enter key's keycode, this could also be display by event.keyCode === 13
 		checkForDuplicates();
 	} else {

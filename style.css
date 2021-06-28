@@ -70,11 +70,6 @@ p {
 	font-weight: normal;
 }
 
-.yesBtn {
-	position: absolute;
-    margin-left: 10px;
-}
-
 #enter:hover{
 	background-color: #02798F;
 	color: #FFCD5D;
