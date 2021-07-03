@@ -30,12 +30,8 @@ checkForDuplicates = () => {
 duplicateFound = (arr) => {
 	hideError(warn);
 	extra.classList.remove("hide");
-	var yesBtn = document.createElement("button");
-	yesBtn.className = "yesBtn";
-	yesBtn.appendChild(document.createTextNode("YES"));
+	var yesBtn = document.getElementById("yes_btn");
 	yesBtn.addEventListener("click", createListElement);
-	// dont append button if button is present
-	arr.length === 1 && extra.appendChild(yesBtn);
 }
 
 
