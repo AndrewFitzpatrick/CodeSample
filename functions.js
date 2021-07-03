@@ -9,17 +9,11 @@ var warn = document.getElementById("warning");
 var extra = document.getElementById("extra");
 
 // returns length of the input value
-function inputLength(){
-	return input.value.length;
-}
+inputLength = () => input.value.length;
 
-// returns length of the list
-function listLength(){
-	return item.length;
-}
 
 // creates the warning element
-function createWarningElement() {
+createWarningElement = () => {
 	var li = document.createElement("li"); // creates an element "li"
 	var warningText = "please enter a value";
 	li.appendChild(document.createTextNode(warningText));
@@ -27,12 +21,12 @@ function createWarningElement() {
 }
 
 // if new item field is empty and enter is pushed, display the warning element
-function displayWarning() {
+displayWarning = () => {
 	warn.style.display = "block";
 }
 
 // check if user input is already an item on the list
-function checkForDuplicates() {
+checkForDuplicates = () => {
 	var userInput = input.value;
 	for (let i = 0; i <= item.length - 1; i++) {
 		listArray.push(itemText[i].innerHTML);
@@ -47,7 +41,7 @@ function checkForDuplicates() {
 }
 
 // display warning if duplicate is found
-function duplicateFound(arr) {
+duplicateFound = (arr) => {
 	hideError(warn);
 	extra.style.display = "block";
 	var yesBtn = document.createElement("button");
@@ -60,14 +54,14 @@ function duplicateFound(arr) {
 
 
 // hide error messages
-function hideError(...params) {
+hideError = (...params) => {
 	for (let i = 0; i < params.length; i++) {
         if (params[i].style.display === "block") {params[i].style.display = "none";}
     }
 }
 
 // create a new list item
-function createListElement() {
+createListElement = () => {
 	hideError(warn, extra);	
 	var li = document.createElement("li"); // creates an element "li"
 	var span = document.createElement("span"); // creates an element "li"
@@ -79,13 +73,14 @@ function createListElement() {
 
 
 	// copmplete item when clicked
-	function crossOut() {
-		li.classList.toggle("done");
-	}
+	crossOut = () => li.classList.toggle("done");
 
 	li.addEventListener("click",crossOut);
 
 
+	// delete item when X is clicked
+	const deleteListItem = () => li.classList.add("delete");
+	
 	// add delete option to list item
 	var dBtn = document.createElement("button");
 	dBtn.appendChild(document.createTextNode("X"));
@@ -93,14 +88,11 @@ function createListElement() {
 	dBtn.addEventListener("click", deleteListItem);
 
 
-	// delete item when X is clicked
-	function deleteListItem(){
-		li.classList.add("delete")
-	}
+	
 }
 
 // initial function call
-function addList(event){
+addList = (event) => {
 	if (inputLength() > 0 || inputLength() > 0 && event.which ===13) { //makes sure that an empty input field doesn't create a li
 		checkForDuplicates();
 	} else {
