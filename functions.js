@@ -76,7 +76,7 @@ createListElement = () => {
 addList = (event) => {
 	// if there is a valid entry check for duplicates or show invalid entry warning
 	switch (true) {
-		case (input.value.length > 0 || input.value.length > 0 && event.which === 13) :
+		case (input.value.trim().length > 0 || input.value.trim().length > 0 && event.which === 13) :
 			checkForDuplicates();
 			break;
 		default :
