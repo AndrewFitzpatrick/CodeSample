@@ -35,7 +35,6 @@ p {
 }
 
 #warning {
-	/*display: none;*/
 	padding:  10px;
 	margin:  10px 0;
 	background-color:  #8b0000;
@@ -46,7 +45,6 @@ p {
 }
 
 #extra {
-	/*display: none;*/
 	padding:  10px;
 	margin:  10px 0;
 	background-color:  #8b0000;
