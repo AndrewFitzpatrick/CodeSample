@@ -2,28 +2,13 @@ var enterButton = document.getElementById("enter");
 var input = document.getElementById("userInput");
 var ul = document.querySelector("ul");
 var item = document.getElementsByTagName("li");
-
 var itemText = document.getElementsByClassName("itemEntered");
 var listArray = [];
 var warn = document.getElementById("warning");
 var extra = document.getElementById("extra");
 
-// returns length of the input value
-inputLength = () => input.value.length;
-
-
-// creates the warning element
-createWarningElement = () => {
-	var li = document.createElement("li"); // creates an element "li"
-	var warningText = "please enter a value";
-	li.appendChild(document.createTextNode(warningText));
-	ul.appendChild(li); //adds li to ul
-}
-
-// if new item field is empty and enter is pushed, display the warning element
-displayWarning = () => {
-	warn.style.display = "block";
-}
+warn.classList.add("hide");
+extra.classList.add("hide");
 
 // check if user input is already an item on the list
 checkForDuplicates = () => {
@@ -31,38 +16,39 @@ checkForDuplicates = () => {
 	for (let i = 0; i <= item.length - 1; i++) {
 		listArray.push(itemText[i].innerHTML);
 	}
-	if (listArray.indexOf(input.value) !== -1) {
-		// pass listarray to function for length
-		duplicateFound(listArray);
+	switch (true) {
+		case (listArray.indexOf(input.value) !== -1) :
+			duplicateFound(listArray);
+			break;
+		default:
+			createListElement();
+			break;
 	}
-	else {
-		createListElement();
-	};
 }
 
 // display warning if duplicate is found
 duplicateFound = (arr) => {
 	hideError(warn);
-	extra.style.display = "block";
+	extra.classList.remove("hide");
 	var yesBtn = document.createElement("button");
 	yesBtn.className = "yesBtn";
 	yesBtn.appendChild(document.createTextNode("YES"));
 	yesBtn.addEventListener("click", createListElement);
 	// dont append button if button is present
-	if (arr.length === 1) { extra.appendChild(yesBtn); }
+	arr.length === 1 && extra.appendChild(yesBtn);
 }
 
 
 // hide error messages
 hideError = (...params) => {
 	for (let i = 0; i < params.length; i++) {
-        if (params[i].style.display === "block") {params[i].style.display = "none";}
-    }
+  	params[i].classList.add('hide');
+  }
 }
 
 // create a new list item
 createListElement = () => {
-	hideError(warn, extra);	
+	hideError(warn, extra);
 	var li = document.createElement("li"); // creates an element "li"
 	var span = document.createElement("span"); // creates an element "li"
 	span.appendChild(document.createTextNode(input.value)); //makes text from input field the li text
@@ -71,12 +57,10 @@ createListElement = () => {
 	span.setAttribute("class", "itemEntered");
 	input.value = ""; //Reset text input field
 
-
 	// copmplete item when clicked
 	crossOut = () => li.classList.toggle("done");
 
-	li.addEventListener("click",crossOut);
-
+	li.addEventListener("click", crossOut);
 
 	// delete item when X is clicked
 	const deleteListItem = () => li.classList.add("delete");
@@ -85,26 +69,26 @@ createListElement = () => {
 	var dBtn = document.createElement("button");
 	dBtn.appendChild(document.createTextNode("X"));
 	li.appendChild(dBtn);
-	dBtn.addEventListener("click", deleteListItem);
-
-
-	
+	dBtn.addEventListener("click", deleteListItem);	
 }
 
 // initial function call
 addList = (event) => {
-	if (inputLength() > 0 || inputLength() > 0 && event.which ===13) { //makes sure that an empty input field doesn't create a li
-		checkForDuplicates();
-	} else {
-		 displayWarning();
+	// if there is a valid entry check for duplicates or show invalid entry warning
+	switch (true) {
+		case (input.value.length > 0 || input.value.length > 0 && event.which === 13) :
+			checkForDuplicates();
+			break;
+		default :
+			// if new item field is empty and submitted, display the warning element
+			warn.classList.remove("hide");
+			break;
 	}
 }
 
 enterButton.addEventListener("click",addList);
 
 input.addEventListener("keypress", function (e) {
-    if (e.key === 'Enter') {
-      addList(e)
-    }
+    e.key === 'Enter' && addList(e)
 });
 
