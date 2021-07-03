@@ -15,6 +15,9 @@ checkForDuplicates = () => {
 	var userInput = input.value;
 	for (let i = 0; i <= item.length - 1; i++) {
 		listArray.push(itemText[i].innerHTML);
+		hash = Object.create(null),
+    result = listArray.filter(v => (hash[v] = (hash[v] || 0) + 1) === 2);
+    console.log(result);
 	}
 	switch (true) {
 		case (listArray.indexOf(input.value) !== -1) :
@@ -30,11 +33,8 @@ checkForDuplicates = () => {
 duplicateFound = (arr) => {
 	hideError(warn);
 	extra.classList.remove("hide");
-	var yesBtn = document.createElement("button");
-	yesBtn.className = "yesBtn";
-	yesBtn.appendChild(document.createTextNode("YES"));
+	var yesBtn = document.getElementById("yes_btn");
 	yesBtn.addEventListener("click", createListElement);
-	// dont append button if button is present
 	arr.length === 1 && extra.appendChild(yesBtn);
 }
 
